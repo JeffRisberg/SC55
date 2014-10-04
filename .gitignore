@@ -58,12 +58,9 @@ jrebel.lic
 .cache
 
 # intellij
-*.eml
-*.iml
-*.ipr
-*.iws
-.*.sw?
-.idea
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/libraries
 
 # paulp script
 /.lib/
