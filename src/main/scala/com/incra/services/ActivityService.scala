@@ -13,41 +13,34 @@ import scala.slick.driver.H2Driver.simple._
 object ActivityService {
 
   System.out.println("InitActivityService")
-  Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver") withSession {
+  Database.forURL("jdbc:h2:file:test1", driver = "org.h2.Driver") withSession {
     implicit session =>
-      // <- write queries here
-      System.out.println("have session")
+      val activities = TableQuery[Activity]
+
+      // Create the tables, including primary and foreign keys
+      (activities.ddl).create
+
+      activities +=(101, "Hiking", "", "miles")
+      activities +=(102, "Walking", "", "steps")
+      activities +=(103, "Spins", "", "minutes")
+      activities +=(104, "Exercise", "", "minutes")
   }
   System.out.println("EndInitActivityService")
 
   def getEntityList(): List[Activity] = {
-    System.out.println("getEntityList")
+    var result = scala.collection.mutable.ListBuffer.empty[Activity]
 
-    Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver") withSession {
+    Database.forURL("jdbc:h2:file:test1", driver = "org.h2.Driver") withSession {
       implicit session =>
-        // <- write queries here
-        System.out.println("have session")
 
         val activities = TableQuery[Activity]
 
-        // Create the tables, including primary and foreign keys
-        (activities.ddl).create
-
-        activities +=(101, "Hiking", "", "miles")
-        activities +=(102, "Walking", "", "steps")
-        activities +=(103, "Spins", "", "minutes")
-        activities +=(104, "Exercise", "", "minutes")
-
-        println("Activities:")
         activities foreach { case (id, name, description, uom) =>
           println("  " + name + "\t" + description + "\t" + uom)
         }
-
-        System.out.println("end session")
+        System.out.println(activities)
     }
 
-    var activities = scala.collection.mutable.ListBuffer.empty[Activity]
-
-    activities.toList
+    result.toList
   }
 }
