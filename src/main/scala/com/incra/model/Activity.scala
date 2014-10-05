@@ -1,30 +1,22 @@
 package com.incra.model
 
-// Use H2Driver to connect to an H2 database
-
 import scala.slick.driver.H2Driver.simple._
 
 /**
+ * Definition of the Activity entity
+ *
  * @author Jeffrey Risberg
  * @since 9/10/2014
  */
+class Activity(tag: Tag) extends Table[(Int, String, String, String)](tag, "ACTIVITY") {
+  def id = column[Int]("ID", O.PrimaryKey)
 
-object FirstExample extends App {
+  def name = column[String]("NAME")
 
-  // Definition of the SUPPLIERS table
-  class Activity(tag: Tag) extends Table[(Int, String, String, String)](tag, "ACTIVITY") {
-    def id = column[Int]("ID", O.PrimaryKey)
+  def description = column[String]("DESCRIPTION")
 
-    // This is the primary key column
-    def name = column[String]("NAME")
+  def uom = column[String]("UOM")
 
-    def description = column[String]("DESCRIPTION")
-
-    def uom = column[String]("UOM")
-
-    // Every table needs a * projection with the same type as the table's type parameter
-    def * = (id, name, description, uom)
-  }
-
-  val activities = TableQuery[Activity]
+  // Every table needs a * projection with the same type as the table's type parameter
+  def * = (id, name, description, uom)
 }

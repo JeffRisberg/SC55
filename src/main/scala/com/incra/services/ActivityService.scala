@@ -2,8 +2,7 @@ package com.incra.services
 
 // Use H2Driver to connect to an H2 database
 
-import com.incra.model.FirstExample
-import com.incra.model.FirstExample.Activity
+import com.incra.model._
 
 import scala.slick.driver.H2Driver.simple._
 
@@ -13,29 +12,42 @@ import scala.slick.driver.H2Driver.simple._
  */
 object ActivityService {
 
+  System.out.println("InitActivityService")
+  Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver") withSession {
+    implicit session =>
+      // <- write queries here
+      System.out.println("have session")
+  }
+  System.out.println("EndInitActivityService")
+
   def getEntityList(): List[Activity] = {
+    System.out.println("getEntityList")
+
     Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver") withSession {
       implicit session =>
         // <- write queries here
         System.out.println("have session")
-        (FirstExample.activities.ddl).create
 
-        FirstExample.activities +=(101, "Hiking", "", "miles")
+        val activities = TableQuery[Activity]
 
-        FirstExample.activities +=(102, "Walking", "", "steps")
+        // Create the tables, including primary and foreign keys
+        (activities.ddl).create
+
+        activities +=(101, "Hiking", "", "miles")
+        activities +=(102, "Walking", "", "steps")
+        activities +=(103, "Spins", "", "minutes")
+        activities +=(104, "Exercise", "", "minutes")
+
+        println("Activities:")
+        activities foreach { case (id, name, description, uom) =>
+          println("  " + name + "\t" + description + "\t" + uom)
+        }
+
         System.out.println("end session")
     }
 
     var activities = scala.collection.mutable.ListBuffer.empty[Activity]
 
-    // Create the tables, including primary and foreign keys
-
-
-    // Insert some suppliers
-    //activities += new Activity("Pilates", "", "times")
-    //activities += new Activity("Biking", "", "miles")
-    //activities += new Activity("Spins", "", "minutes")
-    //activities += new Activity("Exercise", "", "minutes")
     activities.toList
   }
 }
