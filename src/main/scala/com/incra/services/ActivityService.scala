@@ -1,9 +1,11 @@
 package com.incra.services
 
-import com.incra.model._
+
+import com.incra.model.{ActivityTable, Activity, Challenge, ChallengeTable}
 
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.jdbc.meta.MTable
+
 
 /**
  * @author Jeff Risberg
@@ -38,6 +40,18 @@ object ActivityService {
       implicit session =>
 
         TableQuery[ActivityTable].list
+    }
+  }
+
+  /**
+   *
+   */
+  def findById(id: Int): Option[Activity] = {
+    Database.forURL("jdbc:mysql://localhost:3306/sc55",
+      user = "developer", password = "123456", driver = "com.mysql.jdbc.Driver") withSession {
+      implicit session =>
+
+        TableQuery[ActivityTable].where(_.id === id).firstOption
     }
   }
 }

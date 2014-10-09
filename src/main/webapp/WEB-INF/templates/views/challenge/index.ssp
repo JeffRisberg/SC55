@@ -8,7 +8,7 @@
 <table class="table">
     #for (challenge <- challenges)
         <tr>
-            <td>${challenge.name}</td>
+            <td><a href="/challenge/${challenge.id}">${challenge.name}</a></td>
             <td>${challenge.startDate}</td>
             <td>${challenge.endDate}</td>
             <td>${challenge.active}</td>

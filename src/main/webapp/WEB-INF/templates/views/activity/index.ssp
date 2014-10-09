@@ -8,7 +8,7 @@
 <table class="table">
     #for (activity <- activities)
         <tr>
-            <td><%= activity.name %></td>
+            <td><a href="/activity/${activity.id}"><%= activity.name %></a></td>
             <td><%= activity.uom %></td>
         </tr>
     #end

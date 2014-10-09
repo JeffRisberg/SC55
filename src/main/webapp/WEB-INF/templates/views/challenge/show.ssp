@@ -1,0 +1,19 @@
+<% import com.incra.model.Challenge %>
+<%@ val challenge: com.incra.model.Challenge %>
+
+<div style="margin-top: 30px; background: #ccc; padding: 10px">
+<table class="table">
+    <tr>
+        <td>Name:</td><td>${challenge.name}</td>
+    </tr>
+    <tr>
+        <td>Start Date:</td><td>${challenge.startDate}</td>
+    </tr>
+    <tr>
+        <td>End Date:</td><td>${challenge.endDate}</td>
+    </tr>
+    <tr>
+        <td>Active:</td><td>${challenge.active}</td>
+    </tr>
+</table>
+</div>
