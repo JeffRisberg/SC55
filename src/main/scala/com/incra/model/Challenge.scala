@@ -8,7 +8,7 @@ import scala.slick.driver.MySQLDriver.simple._
  * Definition of the Challenge entity
  *
  * @author Jeff Risberg
- * @since 09/10/2014
+ * @since 09/11/2014
  */
 case class Challenge(id: Option[Int], name: String, startDate: Date, endDate: Date, active: Boolean)
 

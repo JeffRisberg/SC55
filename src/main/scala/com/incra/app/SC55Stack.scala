@@ -25,7 +25,6 @@ trait SC55Stack extends ScalatraServlet with ScalateSupport {
     engine.packagePrefix = "templates"
     engine
   }
-
   /* end wiring up the precompiled templates */
 
   override protected def templateAttributes(implicit request: HttpServletRequest): mutable.Map[String, Any] = {

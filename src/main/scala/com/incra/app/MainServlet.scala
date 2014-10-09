@@ -1,6 +1,6 @@
 package com.incra.app
 
-import com.incra.services.{ChallengeService, ActivityService}
+import com.incra.services.{ActivityService, ChallengeService}
 
 /**
  * @author Jeff Risberg
@@ -73,5 +73,11 @@ class MainServlet extends SC55Stack {
       redirect("/challenge")
     }
   }
+}
 
+object MainServlet {
+  val url = "jdbc:mysql://localhost:3306/sc55"
+  val driver = "com.mysql.jdbc.Driver"
+  val user = "developer"
+  val password = "123456"
 }
