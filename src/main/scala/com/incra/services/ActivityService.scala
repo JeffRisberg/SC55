@@ -13,7 +13,7 @@ import scala.slick.jdbc.meta.MTable
  */
 object ActivityService {
 
-  System.out.println("InitActivityService")
+  println("InitActivityService")
   Database.forURL("jdbc:h2:file:test1", driver = "org.h2.Driver") withSession {
     implicit session =>
       val activities = TableQuery[ActivityTable]
@@ -22,13 +22,13 @@ object ActivityService {
       if (MTable.getTables("activity").list().isEmpty) {
         (activities.ddl).create
 
-        activities += Activity(101, "Hiking", "", "miles")
-        activities += Activity(102, "Walking", "", "steps")
-        activities += Activity(103, "Spins", "", "minutes")
-        activities += Activity(104, "Exercise", "", "minutes")
+        activities += Activity(Some(101), "Hiking", "", "miles")
+        activities += Activity(Some(102), "Walking", "", "steps")
+        activities += Activity(Some(103), "Spins", "", "minutes")
+        activities += Activity(Some(104), "Exercise", "", "minutes")
       }
   }
-  System.out.println("EndInitActivityService")
+  println("EndInitActivityService")
 
   /**
    *

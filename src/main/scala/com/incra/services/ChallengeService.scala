@@ -15,7 +15,7 @@ import scala.slick.jdbc.meta.MTable
  */
 object ChallengeService {
 
-  System.out.println("InitChallengeService")
+  println("InitChallengeService")
   Database.forURL("jdbc:h2:file:test1", driver = "org.h2.Driver") withSession {
     implicit session =>
       val challenges = TableQuery[ChallengeTable]
@@ -24,13 +24,12 @@ object ChallengeService {
       if (MTable.getTables("challenge").list().isEmpty) {
         (challenges.ddl).create
 
-        challenges += Challenge(101, "Walk to the Moon", new Date(113, 5, 6), new Date(113, 6, 8), true)
-        challenges += Challenge(102, "Fall Hiking", new Date(113, 8, 1), new Date(113, 10, 20), false)
-        challenges += Challenge(103, "Holiday Ship-Shape", new Date(113, 10, 1), new Date(114, 1, 3), false)
+        challenges += Challenge(Some(101), "Walk to the Moon", new Date(113, 5, 6), new Date(113, 6, 8), true)
+        challenges += Challenge(None, "Fall Hiking", new Date(113, 8, 1), new Date(113, 10, 20), false)
+        challenges += Challenge(None, "Holiday Ship-Shape", new Date(113, 10, 1), new Date(114, 1, 3), false)
       }
-
   }
-  System.out.println("EndInitChallengeService")
+  println("EndInitChallengeService")
 
   /**
    *
