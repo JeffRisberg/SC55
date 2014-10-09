@@ -36,6 +36,7 @@ object ChallengeService {
   def getEntityList(): List[Challenge] = {
     Database.forURL("jdbc:mysql://localhost:3306/sc55",
       user = "developer", password = "123456", driver = "com.mysql.jdbc.Driver") withSession {
+      implicit session =>
 
         TableQuery[ChallengeTable].list
     }
