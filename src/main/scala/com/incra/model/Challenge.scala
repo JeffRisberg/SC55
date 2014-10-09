@@ -10,7 +10,9 @@ import scala.slick.driver.H2Driver.simple._
  * @author Jeff Risberg
  * @since 09/10/2014
  */
-class Challenge(tag: Tag) extends Table[(Int, String, Date, Date, Boolean)](tag, "CHALLENGE") {
+case class Challenge(id: Int, name: String, startDate: Date, endDate: Date, active: Boolean)
+
+class ChallengeTable(tag: Tag) extends Table[Challenge](tag, "CHALLENGE") {
   def id = column[Int]("ID", O.PrimaryKey)
 
   def name = column[String]("NAME")
@@ -22,5 +24,5 @@ class Challenge(tag: Tag) extends Table[(Int, String, Date, Date, Boolean)](tag,
   def active = column[Boolean]("ACTIVE")
 
   // Every table needs a * projection with the same type as the table's type parameter
-  def * = (id, name, startDate, endDate, active)
+  def * = (id, name, startDate, endDate, active) <> (Challenge.tupled, Challenge.unapply _)
 }
