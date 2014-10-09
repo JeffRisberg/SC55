@@ -1,6 +1,6 @@
 package com.incra.model
 
-import scala.slick.driver.H2Driver.simple._
+import scala.slick.driver.MySQLDriver.simple._
 
 /**
  * Definition of the Activity entity

@@ -2,7 +2,7 @@ package com.incra.model
 
 import java.sql.Date
 
-import scala.slick.driver.H2Driver.simple._
+import scala.slick.driver.MySQLDriver.simple._
 
 /**
  * Definition of the Challenge entity

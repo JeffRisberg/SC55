@@ -28,6 +28,7 @@ object SC55Build extends Build {
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "com.typesafe.slick" %% "slick" % "2.0.0",
         "com.h2database" % "h2" % "1.3.170",
+        "mysql" % "mysql-connector-java" % "latest.release",
         "org.slf4j" % "slf4j-nop" % "1.6.4",
         "org.eclipse.jetty" % "jetty-webapp" % "9.1.3.v20140225" % "container",
         "org.eclipse.jetty" % "jetty-plus" % "9.1.3.v20140225" % "container",

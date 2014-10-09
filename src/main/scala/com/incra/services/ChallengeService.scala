@@ -1,22 +1,21 @@
 package com.incra.services
 
-// Use H2Driver to connect to an H2 database
-
 import java.sql.Date
 
 import com.incra.model.{Challenge, ChallengeTable}
 
-import scala.slick.driver.H2Driver.simple._
+import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.jdbc.meta.MTable
 
 /**
  * @author Jeff Risberg
- * @since 09/10/2014
+ * @since 10/28/2014
  */
 object ChallengeService {
 
   println("InitChallengeService")
-  Database.forURL("jdbc:h2:file:test1", driver = "org.h2.Driver") withSession {
+  Database.forURL("jdbc:mysql://localhost:3306/sc55",
+    user = "developer", password = "123456", driver = "com.mysql.jdbc.Driver") withSession {
     implicit session =>
       val challenges = TableQuery[ChallengeTable]
 
@@ -35,8 +34,8 @@ object ChallengeService {
    *
    */
   def getEntityList(): List[Challenge] = {
-    Database.forURL("jdbc:h2:file:test1", driver = "org.h2.Driver") withSession {
-      implicit session =>
+    Database.forURL("jdbc:mysql://localhost:3306/sc55",
+      user = "developer", password = "123456", driver = "com.mysql.jdbc.Driver") withSession {
 
         TableQuery[ChallengeTable].list
     }
