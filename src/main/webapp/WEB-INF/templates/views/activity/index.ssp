@@ -9,6 +9,7 @@
     #for (activity <- activities)
         <tr>
             <td><a href="/activity/${activity.id}"><%= activity.name %></a></td>
+            <td><%= activity.description %></td>
             <td><%= activity.uom %></td>
         </tr>
     #end

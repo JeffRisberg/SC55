@@ -31,12 +31,19 @@ class MainServlet extends SC55Stack {
   get("/activity/:id") {
     contentType = "text/html"
 
-    val activity = ActivityService.findById(params("id").toInt)
+    val activityOpt = ActivityService.findById(params("id").toInt)
 
-    val data1 = List("title" -> "SC55 Activity")
-    val data2 = data1 ++ List("activity" -> activity)
+    if (activityOpt.isDefined) {
+      val activity = activityOpt.get
 
-    ssp("/activity/show", data2.toSeq: _*)
+      val data1 = List("title" -> "SC55 Activity")
+      val data2 = data1 ++ List("activity" -> activity)
+
+      ssp("/activity/show", data2.toSeq: _*)
+    }
+    else {
+      redirect("/activity")
+    }
   }
 
   get("/challenge") {
@@ -53,12 +60,18 @@ class MainServlet extends SC55Stack {
   get("/challenge/:id") {
     contentType = "text/html"
 
-    val challenge = ChallengeService.findById(params("id").toInt)
+    val challengeOpt = ChallengeService.findById(params("id").toInt)
+    if (challengeOpt.isDefined) {
+      val challenge = challengeOpt.get
 
-    val data1 = List("title" -> "SC55 Challenge")
-    val data2 = data1 ++ List("challenge" -> challenge)
+      val data1 = List("title" -> "SC55 Challenge")
+      val data2 = data1 ++ List("challenge" -> challenge)
 
-    ssp("/challenge/show", data2.toSeq: _*)
+      ssp("/challenge/show", data2.toSeq: _*)
+    }
+    else {
+      redirect("/challenge")
+    }
   }
 
 }
