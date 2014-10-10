@@ -46,8 +46,8 @@ object ActivityService {
    *
    */
   def findById(id: Int): Option[Activity] = {
-    Database.forURL("jdbc:mysql://localhost:3306/sc55",
-      user = "developer", password = "123456", driver = "com.mysql.jdbc.Driver") withSession {
+    Database.forURL(MainServlet.url,
+      user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
       implicit session =>
 
         TableQuery[ActivityTable].where(_.id === id).firstOption

@@ -47,8 +47,8 @@ object ChallengeService {
    *
    */
   def findById(id: Int): Option[Challenge] = {
-    Database.forURL("jdbc:mysql://localhost:3306/sc55",
-      user = "developer", password = "123456", driver = "com.mysql.jdbc.Driver") withSession {
+    Database.forURL(MainServlet.url,
+      user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
       implicit session =>
 
         TableQuery[ChallengeTable].where(_.id === id).firstOption
