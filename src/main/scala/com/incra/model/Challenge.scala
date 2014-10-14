@@ -10,12 +10,15 @@ import scala.slick.driver.MySQLDriver.simple._
  * @author Jeff Risberg
  * @since 09/11/2014
  */
-case class Challenge(id: Option[Int], name: String, startDate: Date, endDate: Date, active: Boolean)
+case class Challenge(id: Option[Int], name: String, teamworkType: TeamworkType,
+                     startDate: Date, endDate: Date, active: Boolean)
 
 class ChallengeTable(tag: Tag) extends Table[Challenge](tag, "CHALLENGE") {
   def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
 
   def name = column[String]("NAME")
+
+  def teamworkType = column[TeamworkType]("TEAMWORK_TYPE")
 
   def startDate = column[Date]("START_DATE")
 
@@ -24,5 +27,5 @@ class ChallengeTable(tag: Tag) extends Table[Challenge](tag, "CHALLENGE") {
   def active = column[Boolean]("ACTIVE")
 
   // Every table needs a * projection with the same type as the table's type parameter
-  def * = (id.?, name, startDate, endDate, active) <>(Challenge.tupled, Challenge.unapply _)
+  def * = (id.?, name, teamworkType, startDate, endDate, active) <>(Challenge.tupled, Challenge.unapply _)
 }
