@@ -1,6 +1,6 @@
 package com.incra.app
 
-import com.incra.services.{ActivityService, ChallengeService}
+import com.incra.services.{LeaderboardService, ChallengeService, ActivityService}
 
 /**
  * @author Jeff Risberg
@@ -31,7 +31,7 @@ class MainServlet extends SC55Stack {
   get("/activity/:id") {
     contentType = "text/html"
 
-    val activityOpt = ActivityService.findById(params("id").toInt)
+    val activityOpt = ActivityService.findById(params("id").toLong)
 
     if (activityOpt.isDefined) {
       val activity = activityOpt.get
@@ -60,7 +60,7 @@ class MainServlet extends SC55Stack {
   get("/challenge/:id") {
     contentType = "text/html"
 
-    val challengeOpt = ChallengeService.findById(params("id").toInt)
+    val challengeOpt = ChallengeService.findById(params("id").toLong)
     if (challengeOpt.isDefined) {
       val challenge = challengeOpt.get
 
@@ -72,6 +72,17 @@ class MainServlet extends SC55Stack {
     else {
       redirect("/challenge")
     }
+  }
+
+  get("/leaderboard") {
+    contentType = "text/html"
+
+    val leaderboards = LeaderboardService.getEntityList()
+
+    val data1 = List("title" -> "SC55 Leaderboard")
+    val data2 = data1 ++ List("name" -> "Brocade-San Jose", "leaderboards" -> leaderboards)
+
+    ssp("/leaderboard/index", data2.toSeq: _*)
   }
 }
 

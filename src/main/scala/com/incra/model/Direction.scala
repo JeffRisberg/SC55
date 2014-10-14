@@ -1,5 +1,7 @@
 package com.incra.model
 
+import scala.slick.lifted.MappedTo
+
 /**
  * Direction is ascending or descending.
  *
@@ -15,4 +17,4 @@ object Direction extends Enumeration[String, Direction] {
   val list = List(Ascending, Descending)
 }
 
-sealed abstract class Direction(val key: String, val toInt: Int) extends Enumerated[String]
+case class Direction(value: String, toInt: Int) extends MappedTo[String]

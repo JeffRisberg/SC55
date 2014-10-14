@@ -6,12 +6,12 @@ import scala.slick.driver.MySQLDriver.simple._
  * Definition of the Activity entity
  *
  * @author Jeffrey Risberg
- * @since 9/10/2014
+ * @since 06/10/2014
  */
-case class Activity(id: Option[Int], name: String, description: String, uom: String)
+case class Activity(id: Option[Long], name: String, description: String, uom: String) extends Entity[Long]
 
 class ActivityTable(tag: Tag) extends Table[Activity](tag, "ACTIVITY") {
-  def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
+  def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
 
   def name = column[String]("NAME")
 

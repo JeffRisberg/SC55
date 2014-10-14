@@ -1,0 +1,21 @@
+<% import com.incra.model.Leaderboard %>
+<% import com.incra.model.Direction %>
+<%@ val name: Any %>
+<%@ val leaderboards: List[com.incra.model.Leaderboard] %>
+
+<div style="margin-top: 30px; background: #ccc; padding: 10px">
+<h2>The group name is <%= name %></h2>
+<h3>The current leaderboards are:</h3>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Direction</th>
+    </tr>
+    #for (leaderboard <- leaderboards)
+        <tr>
+            <td><a href="/leaderboard/${leaderboard.id}">${leaderboard.name}</a></td>
+            <td>${leaderboard.direction.value}</td>
+        </tr>
+    #end
+</table>
+</div>

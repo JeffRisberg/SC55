@@ -1,5 +1,7 @@
 package com.incra.model
 
+import scala.slick.lifted.MappedTo
+
 /**
  * TeamworkType for a Challenge.
  *
@@ -15,4 +17,4 @@ object TeamworkType extends Enumeration[Long, TeamworkType] {
   val list = List(Individual, Team)
 }
 
-sealed abstract class TeamworkType(val key: Long, val name: String) extends Enumerated[Long]
+case class TeamworkType(value: Long, name: String) extends MappedTo[Long]

@@ -49,7 +49,7 @@ object ChallengeService {
   /**
    *
    */
-  def findById(id: Int): Option[Challenge] = {
+  def findById(id: Long): Option[Challenge] = {
     Database.forURL(MainServlet.url,
       user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
       implicit session =>

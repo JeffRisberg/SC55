@@ -7,6 +7,9 @@
         <td>Name:</td><td>${challenge.name}</td>
     </tr>
     <tr>
+        <td>Type:</td><td>${challenge.teamworkType.name}</td>
+    </tr>
+    <tr>
         <td>Start Date:</td><td>${challenge.startDate}</td>
     </tr>
     <tr>

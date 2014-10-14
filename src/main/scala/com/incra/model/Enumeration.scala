@@ -1,15 +1,18 @@
 package com.incra.model
 
+import scala.slick.lifted.MappedTo
+
 /**
- * An <i>Enumeration</i> is an ordered collection of enumerated items.
+ * An <i>Enumeration</i> is an ordered collection of values, each of which have a key [K], and a value [T].
+ * The Enumeration values must extend MappedTo[K] for compability with Slick2.
  *
  * @author Jeff Risberg
- * @since 09/27/14
+ * @since 10/08/14
  */
-trait Enumeration[K, T <: Enumerated[K]] extends Serializable {
+trait Enumeration[K, T <: MappedTo[K]] extends Serializable {
   val list: List[T]
 
-  private lazy val map: Map[K, T] = list.map((enumerated: T) => enumerated.key -> enumerated).toMap
+  private lazy val map: Map[K, T] = list.map((t: T) => t.value -> t).toMap
 
-  final def valueOf(key: K): T = map(key)
+  def apply(value: K) = map(value)
 }

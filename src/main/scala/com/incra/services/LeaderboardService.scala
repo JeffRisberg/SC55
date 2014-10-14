@@ -1,7 +1,9 @@
 package com.incra.services
 
+import java.sql.Date
+
 import com.incra.app.MainServlet
-import com.incra.model.{ActivityTable, Activity}
+import com.incra.model.{Direction, LeaderboardTable, Leaderboard, TeamworkType}
 
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.jdbc.meta.MTable
@@ -10,47 +12,46 @@ import scala.slick.jdbc.meta.MTable
  * @author Jeff Risberg
  * @since 10/08/2014
  */
-object ActivityService {
+object LeaderboardService {
 
-  println("InitActivityService")
+  println("InitLeaderboardService")
   Database.forURL(MainServlet.url,
     user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
     implicit session =>
-      val activities = TableQuery[ActivityTable]
+      val leaderboards = TableQuery[LeaderboardTable]
 
       // Create the tables, including primary and foreign keys
-      if (MTable.getTables("activity").list().isEmpty) {
-        (activities.ddl).create
+      if (MTable.getTables("leaderboard").list().isEmpty) {
+        (leaderboards.ddl).create
 
-        activities += Activity(None, "Hiking", "Climb the mountain", "miles")
-        activities += Activity(Some(102), "Walking", "Go out and walk", "steps")
-        activities += Activity(None, "Spins", "Go to class at the gym", "minutes")
-        activities += Activity(Some(104), "Exercise", "Do whatever you want", "minutes")
+        leaderboards += Leaderboard(None, "Fall Hiking", Direction.Descending)
+        leaderboards += Leaderboard(Some(101), "Walk to the Moon", Direction.Ascending)
+        leaderboards += Leaderboard(None, "Holiday Ship-Shape", Direction.Descending)
       }
   }
-  println("EndInitActivityService")
+  println("EndInitLeaderboardService")
 
   /**
    *
    */
-  def getEntityList(): List[Activity] = {
+  def getEntityList(): List[Leaderboard] = {
     Database.forURL(MainServlet.url,
       user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
       implicit session =>
 
-        TableQuery[ActivityTable].list
+        TableQuery[LeaderboardTable].list
     }
   }
 
   /**
    *
    */
-  def findById(id: Long): Option[Activity] = {
+  def findById(id: Long): Option[Leaderboard] = {
     Database.forURL(MainServlet.url,
       user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
       implicit session =>
 
-        TableQuery[ActivityTable].where(_.id === id).firstOption
+        TableQuery[LeaderboardTable].where(_.id === id).firstOption
     }
   }
 }

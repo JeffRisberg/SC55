@@ -1,4 +1,5 @@
 <% import com.incra.model.Challenge %>
+<% import com.incra.model.TeamworkType %>
 <%@ val name: Any %>
 <%@ val challenges: List[com.incra.model.Challenge] %>
 
@@ -6,9 +7,16 @@
 <h2>The group name is <%= name %></h2>
 <h3>The current challenges are:</h3>
 <table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
     #for (challenge <- challenges)
         <tr>
             <td><a href="/challenge/${challenge.id}">${challenge.name}</a></td>
+            <td>${challenge.teamworkType.name}</td>
             <td>${challenge.startDate}</td>
             <td>${challenge.endDate}</td>
             <td>${challenge.active}</td>
