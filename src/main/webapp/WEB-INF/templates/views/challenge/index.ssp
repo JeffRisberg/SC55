@@ -12,6 +12,7 @@
         <th>Type</th>
         <th>Start Date</th>
         <th>End Date</th>
+        <th>Active</th>
     </tr>
     #for (challenge <- challenges)
         <tr>

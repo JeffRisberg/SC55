@@ -24,9 +24,9 @@ object LeaderboardService {
       if (MTable.getTables("leaderboard").list().isEmpty) {
         (leaderboards.ddl).create
 
-        leaderboards += Leaderboard(None, "Fall Hiking", Direction.Descending)
-        leaderboards += Leaderboard(Some(101), "Walk to the Moon", Direction.Ascending)
-        leaderboards += Leaderboard(None, "Holiday Ship-Shape", Direction.Descending)
+        leaderboards += Leaderboard(None, "Team Leaders", Direction.Descending)
+        leaderboards += Leaderboard(Some(101), "All-Time WinnersWalk to the Moon", Direction.Ascending)
+        leaderboards += Leaderboard(None, "Recent Gainers", Direction.Descending)
       }
   }
   println("EndInitLeaderboardService")

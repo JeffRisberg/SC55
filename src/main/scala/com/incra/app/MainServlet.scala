@@ -79,7 +79,7 @@ class MainServlet extends SC55Stack {
 
     val leaderboards = LeaderboardService.getEntityList()
 
-    val data1 = List("title" -> "SC55 Leaderboard")
+    val data1 = List("title" -> "SC55 Leaderboards")
     val data2 = data1 ++ List("name" -> "Brocade-San Jose", "leaderboards" -> leaderboards)
 
     ssp("/leaderboard/index", data2.toSeq: _*)
