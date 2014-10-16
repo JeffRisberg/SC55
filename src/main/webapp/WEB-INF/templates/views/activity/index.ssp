@@ -6,6 +6,11 @@
 <h2>The user name is <%= name %></h2>
 <h3>The selected activities are:</h3>
 <table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Units</th>
+    </tr>
     #for (activity <- activities)
         <tr>
             <td><a href="/activity/${activity.id}"><%= activity.name %></a></td>
