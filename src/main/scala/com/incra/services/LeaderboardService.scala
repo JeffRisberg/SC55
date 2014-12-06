@@ -2,6 +2,7 @@ package com.incra.services
 
 import java.sql.Date
 
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.incra.app.MainServlet
 import com.incra.model.{Direction, LeaderboardTable, Leaderboard, TeamworkType}
 
@@ -12,7 +13,8 @@ import scala.slick.jdbc.meta.MTable
  * @author Jeff Risberg
  * @since 10/08/2014
  */
-object LeaderboardService {
+class LeaderboardService(implicit val bindingModule: BindingModule) extends Injectable {
+  //private def dbOperation = inject[DBOperation](RDS)
 
   println("InitLeaderboardService")
   Database.forURL(MainServlet.url,

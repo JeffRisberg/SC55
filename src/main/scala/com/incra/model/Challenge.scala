@@ -2,6 +2,8 @@ package com.incra.model
 
 import java.sql.Date
 
+import com.incra.model.TeamworkType.TeamworkType
+
 import scala.slick.driver.MySQLDriver.simple._
 
 /**
@@ -14,6 +16,9 @@ case class Challenge(id: Option[Long], name: String, teamworkType: TeamworkType,
                      startDate: Date, endDate: Date, active: Boolean) extends Entity[Long]
 
 class ChallengeTable(tag: Tag) extends Table[Challenge](tag, "CHALLENGE") {
+
+  implicit val teamworkTypeMapper = MappedColumnType.base[TeamworkType, Long](_.value, TeamworkType.withKey(_))
+
   def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
 
   def name = column[String]("NAME")
@@ -25,8 +30,6 @@ class ChallengeTable(tag: Tag) extends Table[Challenge](tag, "CHALLENGE") {
   def endDate = column[Date]("END_DATE")
 
   def active = column[Boolean]("ACTIVE")
-
-  implicit val teamworkTypeMapper = MappedColumnType.base[TeamworkType, Long](_.value, TeamworkType(_))
 
   // Every table needs a * projection with the same type as the table's type parameter
   def * = (id.?, name, teamworkType, startDate, endDate, active) <>(Challenge.tupled, Challenge.unapply _)

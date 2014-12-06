@@ -2,18 +2,26 @@ package com.incra.app
 
 import javax.servlet.http.HttpServletRequest
 
+import com.escalatesoft.subcut.inject.Injectable
 import org.fusesource.scalate.TemplateEngine
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
+import org.json4s.{DefaultFormats, Formats}
 import org.scalatra._
+import org.scalatra.json.JacksonJsonSupport
 import org.scalatra.scalate.ScalateSupport
 
 import scala.collection.mutable
 
 /**
  * @author Jeffrey Risberg
- * @since 9/10/2014
+ * @since 10/04/2014
  */
-trait SC55Stack extends ScalatraServlet with ScalateSupport {
+trait SC55Stack extends ScalatraServlet
+with ScalateSupport
+with JacksonJsonSupport
+with Injectable {
+
+  override val jsonFormats: Formats = DefaultFormats.withDouble
 
   /* wire up the precompiled templates */
   override protected def defaultTemplatePath: List[String] = List("/WEB-INF/templates/views")
@@ -25,6 +33,7 @@ trait SC55Stack extends ScalatraServlet with ScalateSupport {
     engine.packagePrefix = "templates"
     engine
   }
+
   /* end wiring up the precompiled templates */
 
   override protected def templateAttributes(implicit request: HttpServletRequest): mutable.Map[String, Any] = {
@@ -36,9 +45,10 @@ trait SC55Stack extends ScalatraServlet with ScalateSupport {
     // remove content type in case it was set through an action
     contentType = null
     // Try to render a ScalateTemplate if no route matched
-    findTemplate(requestPath) map { path =>
-      contentType = "text/html"
-      layoutTemplate(path)
+    findTemplate(requestPath) map {
+      path =>
+        contentType = "text/html"
+        layoutTemplate(path)
     } orElse serveStaticResource() getOrElse resourceNotFound()
   }
 }

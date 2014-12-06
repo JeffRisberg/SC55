@@ -8,13 +8,19 @@ import scala.slick.lifted.MappedTo
  * @author Jeff Risberg
  * @since 10/04/14
  */
-object TeamworkType extends Enumeration[Long, TeamworkType] {
+object TeamworkType extends scala.Enumeration {
 
-  object Individual extends TeamworkType(1L, "Individual")
+  val Individual = TeamworkType(1L, "Individual")
 
-  object Team extends TeamworkType(2L, "Team")
+  val Team = TeamworkType(2L, "Team")
 
-  val list = List(Individual, Team)
+  case class TeamworkType(value: Long, name: String) extends Val(nextId, name)
+
+  final def withKey(k: Long): TeamworkType = {
+    values.iterator.map(_.asInstanceOf[TeamworkType]).find(_.value == k).get
+  }
+
+  final def list: List[TeamworkType] = values.toList.map(_.asInstanceOf[TeamworkType])
 }
 
-case class TeamworkType(value: Long, name: String) extends MappedTo[Long]
+

@@ -1,12 +1,19 @@
 package com.incra.app
 
+import com.escalatesoft.subcut.inject.BindingModule
 import com.incra.services.{LeaderboardService, ChallengeService, ActivityService}
 
 /**
  * @author Jeff Risberg
  * @since late August 2014
  */
-class MainServlet extends SC55Stack {
+class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
+
+  private def activityService = inject[ActivityService]
+
+  private def challengeService = inject[ChallengeService]
+
+  private def leaderboardService = inject[LeaderboardService]
 
   get("/") {
     contentType = "text/html"
@@ -20,7 +27,7 @@ class MainServlet extends SC55Stack {
   get("/activity") {
     contentType = "text/html"
 
-    val activities = ActivityService.getEntityList()
+    val activities = activityService.getEntityList()
 
     val data1 = List("title" -> "SC55 Activities")
     val data2 = data1 ++ List("name" -> "George Washington", "activities" -> activities)
@@ -31,7 +38,7 @@ class MainServlet extends SC55Stack {
   get("/activity/:id") {
     contentType = "text/html"
 
-    val activityOpt = ActivityService.findById(params("id").toLong)
+    val activityOpt = activityService.findById(params("id").toLong)
 
     if (activityOpt.isDefined) {
       val activity = activityOpt.get
@@ -49,7 +56,7 @@ class MainServlet extends SC55Stack {
   get("/challenge") {
     contentType = "text/html"
 
-    val challenges = ChallengeService.getEntityList()
+    val challenges = challengeService.getEntityList()
 
     val data1 = List("title" -> "SC55 Challenges")
     val data2 = data1 ++ List("name" -> "Brocade-San Jose", "challenges" -> challenges)
@@ -60,7 +67,7 @@ class MainServlet extends SC55Stack {
   get("/challenge/:id") {
     contentType = "text/html"
 
-    val challengeOpt = ChallengeService.findById(params("id").toLong)
+    val challengeOpt = challengeService.findById(params("id").toLong)
     if (challengeOpt.isDefined) {
       val challenge = challengeOpt.get
 
@@ -77,7 +84,7 @@ class MainServlet extends SC55Stack {
   get("/leaderboard") {
     contentType = "text/html"
 
-    val leaderboards = LeaderboardService.getEntityList()
+    val leaderboards = leaderboardService.getEntityList()
 
     val data1 = List("title" -> "SC55 Leaderboards")
     val data2 = data1 ++ List("name" -> "Brocade-San Jose", "leaderboards" -> leaderboards)

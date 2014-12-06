@@ -12,7 +12,7 @@ object SC55Build extends Build {
   val ScalaVersion = "2.10.4"
   val ScalatraVersion = "2.2.2"
 
-  lazy val project = Project (
+  lazy val project = Project(
     "SC55",
     file("."),
     settings = ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
@@ -26,8 +26,8 @@ object SC55Build extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-        "org.json4s" %% "json4s-jackson" % "3.2.6",
-        "org.mongodb" %% "casbah" % "2.6.0",
+        "org.scalatra" %% "scalatra-json" % "2.3.0",
+        "org.json4s" %% "json4s-jackson" % "3.2.9",
         "com.escalatesoft.subcut" %% "subcut" % "2.0",
         "mysql" % "mysql-connector-java" % "5.1.21",
         "com.jolbox" % "bonecp" % "0.8.0.RELEASE",
@@ -37,14 +37,14 @@ object SC55Build extends Build {
         "org.eclipse.jetty" % "jetty-plus" % "9.1.3.v20140225" % "container",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
       ),
-      scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
+      scalateTemplateConfig in Compile <<= (sourceDirectory in Compile) { base =>
         Seq(
           TemplateConfig(
             base / "webapp" / "WEB-INF" / "templates",
-            Seq.empty,  /* default imports should be added here */
+            Seq.empty, /* default imports should be added here */
             Seq(
               Binding("context", "_root_.org.scalatra.scalate.ScalatraRenderContext", importMembers = true, isImplicit = true)
-            ),  /* add extra bindings here */
+            ), /* add extra bindings here */
             Some("templates")
           )
         )

@@ -1,5 +1,6 @@
 package com.incra.services
 
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.incra.app.MainServlet
 import com.incra.model.{ActivityTable, Activity}
 
@@ -10,8 +11,9 @@ import scala.slick.jdbc.meta.MTable
  * @author Jeff Risberg
  * @since 10/08/2014
  */
-object ActivityService {
-
+class ActivityService(implicit val bindingModule: BindingModule) extends Injectable {
+  //private def dbOperation = inject[DBOperation](RDS)
+  
   println("InitActivityService")
   Database.forURL(MainServlet.url,
     user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
