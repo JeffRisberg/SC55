@@ -12,11 +12,10 @@ import scala.slick.jdbc.meta.MTable
  * @since 10/08/2014
  */
 class ActivityService(implicit val bindingModule: BindingModule) extends Injectable {
-  //private def dbOperation = inject[DBOperation](RDS)
-  
+  private def mainDatabase = inject[Database]
+
   println("InitActivityService")
-  Database.forURL(MainServlet.url,
-    user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+  mainDatabase withSession {
     implicit session =>
       val activities = TableQuery[ActivityTable]
 
@@ -24,9 +23,9 @@ class ActivityService(implicit val bindingModule: BindingModule) extends Injecta
       if (MTable.getTables("activity").list().isEmpty) {
         (activities.ddl).create
 
-        activities += Activity(None, "Hiking", "Climb the mountain", "miles")
+        activities += Activity(None, "Hiking", "Climb any mountain", "miles")
         activities += Activity(Some(102), "Walking", "Go out and walk", "steps")
-        activities += Activity(None, "Spins", "Go to class at the gym", "minutes")
+        activities += Activity(None, "Spins", "Go to class at the fitness center", "minutes")
         activities += Activity(Some(104), "Exercise", "Do whatever you want", "minutes")
       }
   }
@@ -36,8 +35,7 @@ class ActivityService(implicit val bindingModule: BindingModule) extends Injecta
    *
    */
   def getEntityList(): List[Activity] = {
-    Database.forURL(MainServlet.url,
-      user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+    mainDatabase withSession {
       implicit session =>
 
         TableQuery[ActivityTable].list
@@ -48,8 +46,7 @@ class ActivityService(implicit val bindingModule: BindingModule) extends Injecta
    *
    */
   def findById(id: Long): Option[Activity] = {
-    Database.forURL(MainServlet.url,
-      user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+    mainDatabase withSession {
       implicit session =>
 
         TableQuery[ActivityTable].where(_.id === id).firstOption

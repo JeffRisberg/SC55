@@ -92,10 +92,3 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
     ssp("/leaderboard/index", data2.toSeq: _*)
   }
 }
-
-object MainServlet {
-  val url = "jdbc:mysql://localhost:3306/sc55"
-  val driver = "com.mysql.jdbc.Driver"
-  val user = "developer"
-  val password = "123456"
-}

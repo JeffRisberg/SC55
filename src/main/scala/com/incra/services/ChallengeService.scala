@@ -14,11 +14,10 @@ import scala.slick.jdbc.meta.MTable
  * @since 10/08/2014
  */
 class ChallengeService(implicit val bindingModule: BindingModule) extends Injectable {
-  //private def dbOperation = inject[DBOperation](RDS)
+  private def mainDatabase = inject[Database]
 
   println("InitChallengeService")
-  Database.forURL(MainServlet.url,
-    user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+  mainDatabase withSession {
     implicit session =>
       val challenges = TableQuery[ChallengeTable]
 
@@ -40,8 +39,7 @@ class ChallengeService(implicit val bindingModule: BindingModule) extends Inject
    *
    */
   def getEntityList(): List[Challenge] = {
-    Database.forURL(MainServlet.url,
-      user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+    mainDatabase withSession {
       implicit session =>
 
         TableQuery[ChallengeTable].list
@@ -52,8 +50,7 @@ class ChallengeService(implicit val bindingModule: BindingModule) extends Inject
    *
    */
   def findById(id: Long): Option[Challenge] = {
-    Database.forURL(MainServlet.url,
-      user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+    mainDatabase withSession {
       implicit session =>
 
         TableQuery[ChallengeTable].where(_.id === id).firstOption

@@ -14,11 +14,10 @@ import scala.slick.jdbc.meta.MTable
  * @since 10/08/2014
  */
 class LeaderboardService(implicit val bindingModule: BindingModule) extends Injectable {
-  //private def dbOperation = inject[DBOperation](RDS)
+  private def mainDatabase = inject[Database]
 
   println("InitLeaderboardService")
-  Database.forURL(MainServlet.url,
-    user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+  mainDatabase withSession {
     implicit session =>
       val leaderboards = TableQuery[LeaderboardTable]
 
@@ -37,8 +36,7 @@ class LeaderboardService(implicit val bindingModule: BindingModule) extends Inje
    *
    */
   def getEntityList(): List[Leaderboard] = {
-    Database.forURL(MainServlet.url,
-      user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+    mainDatabase withSession {
       implicit session =>
 
         TableQuery[LeaderboardTable].list
@@ -49,8 +47,7 @@ class LeaderboardService(implicit val bindingModule: BindingModule) extends Inje
    *
    */
   def findById(id: Long): Option[Leaderboard] = {
-    Database.forURL(MainServlet.url,
-      user = MainServlet.user, password = MainServlet.password, driver = MainServlet.driver) withSession {
+    mainDatabase withSession {
       implicit session =>
 
         TableQuery[LeaderboardTable].where(_.id === id).firstOption
