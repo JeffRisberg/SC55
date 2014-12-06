@@ -35,6 +35,16 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
     ssp("/activity/index", data2.toSeq: _*)
   }
 
+  get("/activity.json") {
+    contentType = formats("json")
+
+    trapData {
+      val activities = activityService.getEntityList()
+
+      activities
+    }
+  }
+
   get("/activity/:id") {
     contentType = "text/html"
 
@@ -64,6 +74,16 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
     ssp("/challenge/index", data2.toSeq: _*)
   }
 
+  get("/challenge.json") {
+    contentType = formats("json")
+
+    trapData {
+      val challenges = challengeService.getEntityList()
+
+      challenges
+    }
+  }
+
   get("/challenge/:id") {
     contentType = "text/html"
 
@@ -90,5 +110,15 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
     val data2 = data1 ++ List("name" -> "Brocade-San Jose", "leaderboards" -> leaderboards)
 
     ssp("/leaderboard/index", data2.toSeq: _*)
+  }
+
+  get("/leaderboard.json") {
+    contentType = formats("json")
+
+    trapData {
+      val leaderboards = leaderboardService.getEntityList()
+
+      leaderboards
+    }
   }
 }

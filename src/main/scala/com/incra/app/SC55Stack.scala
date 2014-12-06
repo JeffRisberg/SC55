@@ -3,6 +3,7 @@ package com.incra.app
 import javax.servlet.http.HttpServletRequest
 
 import com.escalatesoft.subcut.inject.Injectable
+import com.incra.util.{RestSupport, Logging}
 import org.fusesource.scalate.TemplateEngine
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
 import org.json4s.{DefaultFormats, Formats}
@@ -17,9 +18,11 @@ import scala.collection.mutable
  * @since 10/04/2014
  */
 trait SC55Stack extends ScalatraServlet
+with Injectable
+with Logging
 with ScalateSupport
 with JacksonJsonSupport
-with Injectable {
+with RestSupport{
 
   override val jsonFormats: Formats = DefaultFormats.withDouble
 
@@ -33,6 +36,7 @@ with Injectable {
     engine.packagePrefix = "templates"
     engine
   }
+
   /* end wiring up the precompiled templates */
 
   override protected def templateAttributes(implicit request: HttpServletRequest): mutable.Map[String, Any] = {
