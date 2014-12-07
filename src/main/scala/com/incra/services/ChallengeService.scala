@@ -3,8 +3,7 @@ package com.incra.services
 import java.sql.Date
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.incra.app.MainServlet
-import com.incra.model.{ChallengeTable, Challenge, TeamworkType}
+import com.incra.model.{Challenge, ChallengeTable, TeamworkType}
 
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.jdbc.meta.MTable

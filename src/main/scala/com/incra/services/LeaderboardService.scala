@@ -1,9 +1,6 @@
 package com.incra.services
 
-import java.sql.Date
-
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.incra.app.MainServlet
 import com.incra.model.{Direction, LeaderboardTable, Leaderboard, TeamworkType}
 
 import scala.slick.driver.MySQLDriver.simple._

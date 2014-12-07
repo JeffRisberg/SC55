@@ -1,7 +1,6 @@
 package com.incra.services
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.incra.app.MainServlet
 import com.incra.model.{ActivityTable, Activity}
 
 import scala.slick.driver.MySQLDriver.simple._
