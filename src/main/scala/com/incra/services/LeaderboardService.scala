@@ -23,7 +23,7 @@ class LeaderboardService(implicit val bindingModule: BindingModule) extends Inje
         (leaderboards.ddl).create
 
         leaderboards += Leaderboard(None, "Team Leaders", Direction.Descending)
-        leaderboards += Leaderboard(Some(101), "All-Time WinnersWalk to the Moon", Direction.Ascending)
+        leaderboards += Leaderboard(Some(101), "All-Time Winners", Direction.Ascending)
         leaderboards += Leaderboard(None, "Recent Gainers", Direction.Descending)
       }
   }
