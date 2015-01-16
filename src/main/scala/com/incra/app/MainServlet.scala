@@ -121,4 +121,21 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
       leaderboards
     }
   }
+
+  get("/leaderboard/:id") {
+    contentType = "text/html"
+
+    val leaderboardOpt = leaderboardService.findById(params("id").toLong)
+    if (leaderboardOpt.isDefined) {
+      val leaderboard = leaderboardOpt.get
+
+      val data1 = List("title" -> "SC55 Leaderboard")
+      val data2 = data1 ++ List("leaderboard" -> leaderboard)
+
+      ssp("/leaderboard/show", data2.toSeq: _*)
+    }
+    else {
+      redirect("/leaderboard")
+    }
+  }
 }

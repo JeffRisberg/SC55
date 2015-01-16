@@ -1,0 +1,13 @@
+<% import com.incra.model.Leaderboard %>
+<%@ val leaderboard: com.incra.model.Leaderboard %>
+
+<div style="margin-top: 30px; background: #ccc; padding: 10px">
+<table class="table">
+    <tr>
+        <td>Name:</td><td>${leaderboard.name}</td>
+    </tr>
+    <tr>
+        <td>Type:</td><td>${leaderboard.direction.value}</td>
+    </tr>
+</table>
+</div>

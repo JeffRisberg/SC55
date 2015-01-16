@@ -17,7 +17,6 @@
     <orderEntry type="module-library">
       <library name="sbt-and-plugins">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../project/target/scala-2.10/sbt-0.13/classes" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.0.1.jar!/" />
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/logic-0.13.5.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.mortbay.jetty/jetty/jars/jetty-6.1.22.jar!/" />
@@ -45,7 +44,6 @@
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/tracking-0.13.5.jar!/" />
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/testing-0.13.5.jar!/" />
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/sbinary_2.10-0.4.2.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.5.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.ow2.asm/asm/jars/asm-4.1.jar!/" />
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/test-agent-0.13.5.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.tomcat.embed/tomcat-embed-logging-juli/jars/tomcat-embed-logging-juli-7.0.22.jar!/" />
@@ -90,6 +88,7 @@
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/main-settings-0.13.5.jar!/" />
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/task-system-0.13.5.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-9.1.0.v20131115.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.6.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/org.scalatra.sbt/scalatra-sbt/jars/scalatra-sbt-0.3.5.jar!/" />
         </CLASSES>
         <JAVADOC />
