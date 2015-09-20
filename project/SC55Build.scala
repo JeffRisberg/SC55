@@ -29,7 +29,7 @@ object SC55Build extends Build {
         "org.scalatest" %% "scalatest" % "2.2.4",
         "org.mockito" % "mockito-all" % "1.9.5",
         "org.json4s" %% "json4s-jackson" % "3.2.9",
-        "com.escalatesoft.subcut" %% "subcut" % "2.0",
+        "com.escalatesoft.subcut" %% "subcut" % "2.1",
         "mysql" % "mysql-connector-java" % "5.1.34",
         "com.zaxxer" % "HikariCP-java6" % "2.2.5",
         "com.typesafe.slick" %% "slick" % "2.0.1",
