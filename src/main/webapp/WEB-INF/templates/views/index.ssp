@@ -6,7 +6,7 @@
 <h3><a href="/activity">Activities</a></h3>
 <h3><a href="/challenge">Challenges</a></h3>
 <h3><a href="/leaderboard">Leaderboards</a></h3>
-<p>City: <%= city %></p>
+<p>My City: <%= city %></p>
 <p>State: <%= state %></p>
 <p>Population: <%= population %></p>
 </div>

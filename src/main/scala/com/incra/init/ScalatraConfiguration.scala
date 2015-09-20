@@ -3,9 +3,9 @@ package com.incra.init
 import org.fusesource.scalate.util.Logging
 
 /**
- * Config Support.
+ * Access the Scalatra configuration variables.
  */
-object ConfigSupport extends Logging {
+object ScalatraConfiguration extends Logging {
   val overrideConfigFile = System.getProperty("main.config.location", "/etc/override.conf")
 
   val environment = System.getProperty("org.scalatra.environment", "development")

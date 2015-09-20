@@ -10,7 +10,7 @@ object SC55Build extends Build {
   val Name = "SC55"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.4"
-  val ScalatraVersion = "2.2.2"
+  val ScalatraVersion = "2.3.0"
 
   lazy val project = Project(
     "SC55",
@@ -24,15 +24,17 @@ object SC55Build extends Build {
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
-        "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "org.scalatra" %% "scalatra-json" % "2.3.0",
+        "org.scalatest" %% "scalatest" % "2.2.4",
+        "org.mockito" % "mockito-all" % "1.9.5",
         "org.json4s" %% "json4s-jackson" % "3.2.9",
         "com.escalatesoft.subcut" %% "subcut" % "2.0",
-        "mysql" % "mysql-connector-java" % "5.1.21",
-        "com.jolbox" % "bonecp" % "0.8.0.RELEASE",
+        "mysql" % "mysql-connector-java" % "5.1.34",
+        "com.zaxxer" % "HikariCP-java6" % "2.2.5",
         "com.typesafe.slick" %% "slick" % "2.0.1",
-        "org.slf4j" % "slf4j-nop" % "1.6.4",
+        "com.typesafe" % "config" % "1.0.2",
+        "org.clapper" %% "grizzled-slf4j" % "1.0.2",
         "org.eclipse.jetty" % "jetty-webapp" % "9.1.3.v20140225" % "container",
         "org.eclipse.jetty" % "jetty-plus" % "9.1.3.v20140225" % "container",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))

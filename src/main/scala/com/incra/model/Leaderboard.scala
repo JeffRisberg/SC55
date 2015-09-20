@@ -25,3 +25,13 @@ class LeaderboardTable(tag: Tag) extends Table[Leaderboard](tag, "LEADERBOARD") 
   // Every table needs a * projection with the same type as the table's type parameter
   def * = (id.?, name, direction) <>(Leaderboard.tupled, Leaderboard.unapply _)
 }
+
+object LeaderboardMarshaller {
+  def unmarshall(document: Map[String, Any]) = {
+    Leaderboard(
+      Some(document.get("ID")).asInstanceOf[Option[Long]],
+      document.get("NAME").get.asInstanceOf[String],
+      Direction.withKey(document.get("DIRECTION").get.asInstanceOf[String])
+    )
+  }
+}

@@ -1,8 +1,13 @@
 package com.incra.init
 
-import com.escalatesoft.subcut.inject.NewBindingModule
-import com.incra.app.MainServlet
-import com.incra.services.{LeaderboardService, ChallengeService, ActivityService}
+import javax.sql.DataSource
+
+import com.escalatesoft.subcut.inject._
+import com.incra.infrastructure.BindingIds.MySQL
+import com.incra.infrastructure.ConfigSupport._
+import com.incra.infrastructure.{DBConnectionFactory, DBOperation, MySQLConnectionFactory}
+import com.incra.services.{ActivityService, ChallengeService, LeaderboardService}
+import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.slick.driver.MySQLDriver.simple._
 
@@ -12,13 +17,32 @@ import scala.slick.driver.MySQLDriver.simple._
 object ServiceConfiguration extends NewBindingModule(mutableBindingModule => {
   import mutableBindingModule._
 
-  val url = "jdbc:mysql://localhost:3306/sc55"
-  val driver = "com.mysql.jdbc.Driver"
-  val user = "developer"
-  val password = "123456"
+  bind[Config] toSingle ConfigFactory.load("config.json")
 
+  bind[DataSource] idBy MySQL toModuleSingle {
+    bindingModule =>
+      val config = bindingModule.inject[Config](None)
+      MySQLConnectionFactory.createDataSource(config.getConfigOrEmpty("mysql"))
+  }
+
+  /** This is used by Slick-based services */
   bind[Database] toProvider {
-    implicit bindingModule => Database.forURL(url, user = user, password = password, driver = driver)
+    bindingModule =>
+      val dataSource = bindingModule.inject[DataSource](Some(MySQL))
+      Database.forDataSource(dataSource)
+  }
+
+  bind[DBConnectionFactory] idBy MySQL toModuleSingle {
+    bindingModule =>
+      val dataSource = bindingModule.inject[DataSource](Some(MySQL))
+      new MySQLConnectionFactory(dataSource)
+  }
+
+  /** This is used by non-Slick-based services */
+  bind[DBOperation] idBy MySQL toProvider {
+    bindingModule =>
+      val dbConnectionFactory = bindingModule.inject[DBConnectionFactory](Some(MySQL))
+      new DBOperation(dbConnectionFactory)
   }
 
   bind[ActivityService] toProvider {

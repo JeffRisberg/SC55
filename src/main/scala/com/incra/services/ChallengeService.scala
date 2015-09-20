@@ -9,6 +9,8 @@ import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.jdbc.meta.MTable
 
 /**
+ * This is a non-Slick-based service
+ *
  * @author Jeff Risberg
  * @since 10/08/2014
  */
