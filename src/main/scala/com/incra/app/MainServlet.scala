@@ -1,6 +1,7 @@
 package com.incra.app
 
 import com.escalatesoft.subcut.inject.BindingModule
+import com.incra.model.Activity
 import com.incra.services.{LeaderboardService, ChallengeService, ActivityService}
 
 /**
@@ -61,6 +62,75 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
     else {
       redirect("/activity")
     }
+  }
+
+  get("/activity/edit/:id") {
+    contentType = "text/html"
+
+    val activityOpt = activityService.findById(params("id").toLong)
+
+    if (activityOpt.isDefined) {
+      val activity = activityOpt.get
+
+      val data1 = List("title" -> "SC55 Activity")
+      val data2 = data1 ++ List("activity" -> activity)
+
+      ssp("/activity/edit", data2.toSeq: _*)
+    }
+    else {
+      redirect("/activity")
+    }
+  }
+
+  get("/activity/create") {
+    val activity = Activity(None, "", "", "miles")
+
+    val data1 = List("title" -> "SC55 Activity")
+    val data2 = data1 ++ List("activity" -> activity)
+
+    ssp("/activity/edit", data2.toSeq: _*)
+  }
+
+  get("/activity/save") {
+    contentType = "text/html"
+
+    if (params("id") != "") {
+      val id = params("id").toLong
+      val activityOpt = activityService.findById(id)
+
+      if (activityOpt.isDefined) {
+        val name = params("name")
+        val description = params("description")
+        val uom = params("uom")
+
+        val activity = Activity(Some(id), name, description, uom)
+
+        activityService.delete(activityOpt.get)
+        activityService.save(activity)
+      }
+    }
+    else {
+      val name = params("name")
+      val description = params("description")
+      val uom = params("uom")
+
+      val activity = Activity(None, name, description, uom)
+
+      activityService.save(activity)
+    }
+    redirect("/activity")
+  }
+
+  get("/activity/delete/:id") {
+    contentType = "text/html"
+
+    val activityOpt = activityService.findById(params("id").toLong)
+
+    if (activityOpt.isDefined) {
+      activityService.delete(activityOpt.get)
+    }
+
+    redirect("/activity")
   }
 
   get("/challenge") {

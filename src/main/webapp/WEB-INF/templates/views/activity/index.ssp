@@ -4,19 +4,24 @@
 
 <div style="margin-top: 30px; background: #ccc; padding: 10px">
 <h2>The user name is <%= name %></h2>
-<h3>The selected activities are:</h3>
+<h3>The activities are:</h3>
 <table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Units</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+  #for (activity <- activities)
     <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Units</th>
+      <td><a href="/activity/${activity.id}"><%= activity.name %></a></td>
+      <td><%= activity.description %></td>
+      <td><%= activity.uom %></td>
+      <td><a href="/activity/edit/${activity.id}">Edit</a></td>
+      <td><a href="/activity/delete/${activity.id}">Delete</a></td>
     </tr>
-    #for (activity <- activities)
-        <tr>
-            <td><a href="/activity/${activity.id}"><%= activity.name %></a></td>
-            <td><%= activity.description %></td>
-            <td><%= activity.uom %></td>
-        </tr>
-    #end
+  #end
 </table>
+<a class="btn btn-primary" href="/activity/create">Create New Activity</a>
 </div>

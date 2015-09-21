@@ -1,0 +1,26 @@
+<% import com.incra.model.Activity %>
+<%@ val activity: com.incra.model.Activity %>
+
+<div style="margin-top: 30px; background: #ccc; padding: 10px">
+<form action="/activity/save">
+<input type="hidden" name="id" value="${activity.id}"/>
+
+  <table class="table">
+    <tr>
+      <td>Name:</td>
+      <td><input type="text" name="name" value="${activity.name}"></td>
+    </tr>
+    <tr>
+      <td>Description:</td>
+      <td><input type="text" name="description" value="${activity.description}"></td>
+    </tr>
+    <tr>
+      <td>Uom:</td>
+      <td><input type="text" name="uom" value="${activity.uom}"/></td>
+    </tr>
+    <tr>
+     <td><input type="submit"></td>
+     </tr>
+  </table>
+</form>
+</div>

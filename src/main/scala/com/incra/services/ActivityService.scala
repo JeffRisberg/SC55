@@ -53,4 +53,29 @@ class ActivityService(implicit val bindingModule: BindingModule) extends Injecta
         TableQuery[ActivityTable].where(_.id === id).firstOption
     }
   }
+
+  /**
+   *
+   * @param activity
+   */
+  def save(activity: Activity) = {
+    mainDatabase withSession {
+      implicit session =>
+
+        val activities = TableQuery[ActivityTable]
+        activities += activity
+    }
+  }
+
+  /**
+   *
+   */
+  def delete(activity: Activity) = {
+    mainDatabase withSession {
+      implicit session =>
+
+        TableQuery[ActivityTable].filter(p => p.id === activity.id)
+          .delete
+    }
+  }
 }
