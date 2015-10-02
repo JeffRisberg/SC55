@@ -1,6 +1,6 @@
 <% import com.incra.model.Activity %>
 <%@ val name: Any %>
-<%@ val activities: List[com.incra.model.Activity] %>
+<%@ val activities: Seq[com.incra.model.Activity] %>
 
 <div style="margin-top: 30px; background: #ccc; padding: 10px">
 <h2>The user name is <%= name %></h2>

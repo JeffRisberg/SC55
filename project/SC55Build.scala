@@ -32,7 +32,7 @@ object SC55Build extends Build {
         "com.escalatesoft.subcut" %% "subcut" % "2.1",
         "mysql" % "mysql-connector-java" % "5.1.34",
         "com.zaxxer" % "HikariCP-java6" % "2.2.5",
-        "com.typesafe.slick" %% "slick" % "2.0.1",
+        "com.typesafe.slick" %% "slick" % "3.0.3",
         "com.typesafe" % "config" % "1.0.2",
         "org.clapper" %% "grizzled-slf4j" % "1.0.2",
         "org.eclipse.jetty" % "jetty-webapp" % "9.1.3.v20140225" % "container",

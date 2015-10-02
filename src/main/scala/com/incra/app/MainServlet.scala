@@ -105,8 +105,7 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
 
         val activity = Activity(Some(id), name, description, uom)
 
-        activityService.delete(activityOpt.get)
-        activityService.save(activity)
+        activityService.update(activity.id.get, activity)
       }
     }
     else {
@@ -116,7 +115,7 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
 
       val activity = Activity(None, name, description, uom)
 
-      activityService.save(activity)
+      activityService.insert(activity)
     }
     redirect("/activity")
   }

@@ -1,81 +1,89 @@
 package com.incra.services
 
-import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.incra.model.{ActivityTable, Activity}
+import slick.jdbc.meta.MTable
 
-import scala.slick.driver.MySQLDriver.simple._
-import scala.slick.jdbc.meta.MTable
+import scala.concurrent.{Future, Await}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
+import slick.backend.DatabasePublisher
+
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.incra.model.{ChallengeTable, Challenge, ActivityTable, Activity}
+
+import slick.driver.MySQLDriver.api._
 
 /**
- * This is a non-Slick-based service
+ * This is a Slick-based service
  *
  * @author Jeff Risberg
- * @since 10/08/2014
+ * @since 10/08/2014 (updated 09/30/15)
  */
 class ActivityService(implicit val bindingModule: BindingModule) extends Injectable {
-  private def mainDatabase = inject[Database]
+  private def database = inject[Database]
 
   println("InitActivityService")
-  mainDatabase withSession {
-    implicit session =>
-      val activities = TableQuery[ActivityTable]
+  val activities = TableQuery[ActivityTable]
 
-      // Create the tables, including primary and foreign keys
-      if (MTable.getTables("activity").list().isEmpty) {
-        (activities.ddl).create
+  val tables = Await.result(database.run(MTable.getTables), Duration.Inf).toList
 
-        activities += Activity(None, "Hiking", "Climb any mountain", "miles")
-        activities += Activity(Some(102), "Walking", "Go out and walk", "steps")
-        activities += Activity(None, "Spins", "Go to class at the fitness center", "minutes")
-        activities += Activity(Some(104), "Exercise", "Do whatever you want", "minutes")
-      }
+  val thisTableExists = tables.exists { table => table.name.name == "ACTIVITY"}
+
+  if (thisTableExists == false) {
+    val setupAction: DBIO[Unit] = DBIO.seq(
+      activities.schema.create
+    )
+
+    val setupFuture: Future[Unit] = database.run(setupAction)
+
+    val populateAction: DBIO[Option[Int]] = activities ++= Seq(
+      Activity(None, "Hiking", "Climb any mountain", "miles"),
+      Activity(Some(102), "Walking", "Go out and walk", "steps"),
+      Activity(None, "Spins", "Go to class at the fitness center", "minutes"),
+      Activity(Some(104), "Exercise", "Do whatever you want", "minutes"))
+
+    val populateFuture: Future[Option[Int]] = database.run(populateAction)
   }
   println("EndInitActivityService")
 
+  def filterQuery(id: Long): Query[ActivityTable, Activity, Seq] =
+    activities.filter(_.id === id)
+
   /**
    *
    */
-  def getEntityList(): List[Activity] = {
-    mainDatabase withSession {
-      implicit session =>
+  def getEntityList(): Seq[Activity] = {
+    val activities = TableQuery[ActivityTable]
 
-        TableQuery[ActivityTable].list
-    }
+    Await.result(database.run(activities.result), Duration.Inf)
   }
 
   /**
-   *
+   * @param id
    */
   def findById(id: Long): Option[Activity] = {
-    mainDatabase withSession {
-      implicit session =>
-
-        TableQuery[ActivityTable].where(_.id === id).firstOption
-    }
+    Some(Await.result(database.run(filterQuery(id).result.head), Duration.Inf))
   }
 
   /**
-   *
+   * @param activity
+   * @return
+   */
+  def insert(activity: Activity): Future[Int] = {
+    database.run(activities += activity)
+  }
+
+  /**
+   * @param id
    * @param activity
    */
-  def save(activity: Activity) = {
-    mainDatabase withSession {
-      implicit session =>
-
-        val activities = TableQuery[ActivityTable]
-        activities += activity
-    }
+  def update(id: Long, activity: Activity): Future[Int] = {
+    database.run(filterQuery(id).update(activity))
   }
 
   /**
    *
    */
   def delete(activity: Activity) = {
-    mainDatabase withSession {
-      implicit session =>
-
-        TableQuery[ActivityTable].filter(p => p.id === activity.id)
-          .delete
-    }
+    database.run(filterQuery(activity.id.get).delete)
   }
 }

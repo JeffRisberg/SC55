@@ -1,7 +1,7 @@
 <% import com.incra.model.Leaderboard %>
 <% import com.incra.model.Direction %>
 <%@ val name: Any %>
-<%@ val leaderboards: List[com.incra.model.Leaderboard] %>
+<%@ val leaderboards: Seq[com.incra.model.Leaderboard] %>
 
 <div style="margin-top: 30px; background: #ccc; padding: 10px">
 <h2>The group name is <%= name %></h2>

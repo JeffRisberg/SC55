@@ -1,7 +1,5 @@
 package com.incra.model
 
-import scala.slick.lifted.MappedTo
-
 /**
  * TeamworkType for a Challenge.
  *
