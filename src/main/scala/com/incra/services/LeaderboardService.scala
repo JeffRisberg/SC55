@@ -2,8 +2,6 @@ package com.incra.services
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.incra.infrastructure.DBOperation
-import com.incra.model.Leaderboard
-import com.incra.model.LeaderboardTable
 import com.incra.model._
 
 import com.incra.infrastructure.BindingIds._
@@ -11,6 +9,7 @@ import com.incra.infrastructure.BindingIds._
 import slick.driver.MySQLDriver.api._
 import slick.jdbc.meta.MTable
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
@@ -44,6 +43,8 @@ class LeaderboardService(implicit val bindingModule: BindingModule) extends Inje
       Leaderboard(None, "Recent Gainers", Direction.Descending))
 
     val populateFuture: Future[Option[Int]] = database.run(populateAction)
+
+    Await.result(setupFuture flatMap { _ => populateFuture }, Duration.Inf)
   }
   println("EndInitLeaderboardService")
 

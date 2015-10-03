@@ -1,16 +1,13 @@
 package com.incra.services
 
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.incra.model._
+import slick.driver.MySQLDriver.api._
 import slick.jdbc.meta.MTable
 
-import scala.concurrent.{Future, Await}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
-import slick.backend.DatabasePublisher
-
-import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.incra.model.{ChallengeTable, Challenge, ActivityTable, Activity}
-
-import slick.driver.MySQLDriver.api._
+import scala.concurrent.{Await, Future}
 
 /**
  * This is a Slick-based service
@@ -42,6 +39,8 @@ class ActivityService(implicit val bindingModule: BindingModule) extends Injecta
       Activity(Some(104), "Exercise", "Do whatever you want", "minutes"))
 
     val populateFuture: Future[Option[Int]] = database.run(populateAction)
+
+    Await.result(setupFuture flatMap { _ => populateFuture }, Duration.Inf)
   }
   println("EndInitActivityService")
 
@@ -61,7 +60,9 @@ class ActivityService(implicit val bindingModule: BindingModule) extends Injecta
    * @param id
    */
   def findById(id: Long): Option[Activity] = {
-    Some(Await.result(database.run(filterQuery(id).result.head), Duration.Inf))
+    val records = Await.result(database.run(filterQuery(id).result), Duration.Inf)
+
+    if (records.isEmpty) None else Some(records.head)
   }
 
   /**

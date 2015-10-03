@@ -4,11 +4,12 @@ import java.sql.Date
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.incra.model._
+import slick.driver.MySQLDriver.api._
 import slick.jdbc.meta.MTable
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
-import slick.driver.MySQLDriver.api._
 
 /**
  * This is a Slick-based service
@@ -39,6 +40,8 @@ class ChallengeService(implicit val bindingModule: BindingModule) extends Inject
     )
 
     val populateFuture: Future[Option[Int]] = database.run(populateAction)
+
+    Await.result(setupFuture flatMap { _ => populateFuture }, Duration.Inf)
   }
   println("EndInitChallengeService")
 
@@ -58,6 +61,8 @@ class ChallengeService(implicit val bindingModule: BindingModule) extends Inject
    * @param id
    */
   def findById(id: Long): Option[Challenge] = {
-    Some(Await.result(database.run(filterQuery(id).result.head), Duration.Inf))
+    val records = Await.result(database.run(filterQuery(id).result), Duration.Inf)
+
+    if (records.isEmpty) None else Some(records.head)
   }
 }
