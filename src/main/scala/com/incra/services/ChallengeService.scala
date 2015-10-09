@@ -52,7 +52,7 @@ class ChallengeService(implicit val bindingModule: BindingModule) extends Inject
    *
    */
   def getEntityList(): Seq[Challenge] = {
-    val activities = TableQuery[ChallengeTable]
+    val challenges = TableQuery[ChallengeTable]
 
     Await.result(database.run(challenges.result), Duration.Inf)
   }
@@ -64,5 +64,28 @@ class ChallengeService(implicit val bindingModule: BindingModule) extends Inject
     val records = Await.result(database.run(filterQuery(id).result), Duration.Inf)
 
     if (records.isEmpty) None else Some(records.head)
+  }
+
+  /**
+   * @param challenge
+   * @return
+   */
+  def insert(challenge: Challenge): Future[Int] = {
+    database.run(challenges += challenge)
+  }
+
+  /**
+   * @param id
+   * @param challenge
+   */
+  def update(id: Long, challenge: Challenge): Future[Int] = {
+    database.run(filterQuery(id).update(challenge))
+  }
+
+  /**
+   *
+   */
+  def delete(challenge: Challenge) = {
+    database.run(filterQuery(challenge.id.get).delete)
   }
 }
