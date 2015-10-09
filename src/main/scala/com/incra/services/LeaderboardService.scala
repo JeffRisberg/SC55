@@ -1,5 +1,7 @@
 package com.incra.services
 
+import java.sql.{Statement, Types}
+
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.incra.infrastructure.DBOperation
 import com.incra.model._
@@ -48,6 +50,9 @@ class LeaderboardService(implicit val bindingModule: BindingModule) extends Inje
   }
   println("EndInitLeaderboardService")
 
+  private val leaderboardFields = Seq(
+    "id", "name", "direction")
+
   /**
    *
    */
@@ -67,5 +72,54 @@ class LeaderboardService(implicit val bindingModule: BindingModule) extends Inje
       Some(LeaderboardMarshaller.unmarshall(result(0)))
     else
       None
+  }
+
+  /**
+   * @param leaderboard
+   * @return
+   */
+  def insert(leaderboard: Leaderboard): Long = {
+    val fieldStr = leaderboardFields.mkString(",")
+    val paramStr = leaderboardFields.map(f => "?").mkString(",")
+
+    val sql = s"insert into leaderboard ($fieldStr) values ($paramStr)"
+
+    dbOperation.executeInsert(sql, ps => {
+      val doc = LeaderboardMarshaller.marshall(leaderboard)
+      leaderboardFields.zipWithIndex.foreach {
+        case (key, i) =>
+          doc(key) match {
+            case None => ps.setNull(i + 1, Types.OTHER)
+            case value: Object => ps.setObject(i + 1, value)
+          }
+      }
+    }, Some(Statement.RETURN_GENERATED_KEYS))
+  }
+
+  /**
+   * @param id
+   * @param leaderboard
+   */
+  def update(id: Long, leaderboard: Leaderboard): Long = {
+    val paramStr = leaderboardFields.map(f => s"$f = ?").mkString(",")
+    val sql = s"update leaderboard set $paramStr where id = ?"
+    dbOperation.executeUpdate(sql, ps => {
+      val doc = LeaderboardMarshaller.marshall(leaderboard)
+      leaderboardFields.zipWithIndex.foreach {
+        case (key, i) => ps.setObject(i + 1, doc(key))
+      }
+      ps.setObject(leaderboardFields.size+1, id)
+    })
+    1L
+  }
+
+  /**
+   *
+   */
+  def delete(leaderboard: Leaderboard) = {
+    val sql = "delete from leaderboard where id = ?"
+    dbOperation.executeUpdate(sql, ps => {
+      ps.setLong(1, leaderboard.id.get)
+    })
   }
 }

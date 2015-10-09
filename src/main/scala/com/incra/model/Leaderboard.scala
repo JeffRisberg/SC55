@@ -34,4 +34,12 @@ object LeaderboardMarshaller {
       Direction.withKey(document.get("DIRECTION").get.asInstanceOf[String])
     )
   }
+
+  def marshall(leaderboard: Leaderboard) = {
+    Map(
+      "id" -> leaderboard.id.getOrElse(None),
+      "name" -> leaderboard.name,
+      "direction" -> leaderboard.direction.value
+    )
+  }
 }

@@ -1,7 +1,8 @@
 package com.incra.app
 
 import com.escalatesoft.subcut.inject.BindingModule
-import com.incra.model.Activity
+import com.incra.model.Direction.Ascending
+import com.incra.model.{Direction, Leaderboard, Activity}
 import com.incra.services.{LeaderboardService, ChallengeService, ActivityService}
 
 /**
@@ -207,4 +208,72 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
       redirect("/leaderboard")
     }
   }
+
+  get("/leaderboard/edit/:id") {
+    contentType = "text/html"
+
+    val leaderboardOpt = leaderboardService.findById(params("id").toLong)
+
+    if (leaderboardOpt.isDefined) {
+      val leaderboard = leaderboardOpt.get
+
+      val data1 = List("title" -> "SC55 Leaderboard")
+      val data2 = data1 ++ List("leaderboard" -> leaderboard)
+
+      ssp("/leaderboard/edit", data2.toSeq: _*)
+    }
+    else {
+      redirect("/leaderboard")
+    }
+  }
+
+  get("/leaderboard/create") {
+    val leaderboard = Leaderboard(None, "", Direction.Ascending)
+
+    val data1 = List("title" -> "SC55 Leaderboard")
+    val data2 = data1 ++ List("leaderboard" -> leaderboard)
+
+    ssp("/leaderboard/edit", data2.toSeq: _*)
+  }
+
+  get("/leaderboard/save") {
+    contentType = "text/html"
+
+    if (params("id") != "") {
+      val id = params("id").toLong
+      val leaderboardOpt = leaderboardService.findById(id)
+
+      if (leaderboardOpt.isDefined) {
+        val name = params("name")
+        val direction = Direction.Ascending
+
+        val leaderboard = Leaderboard(Some(id), name, direction)
+
+        leaderboardService.update(leaderboard.id.get, leaderboard)
+      }
+    }
+    else {
+      val name = params("name")
+      val direction = Direction.Ascending
+
+      val leaderboard = Leaderboard(None, name, direction)
+
+      leaderboardService.insert(leaderboard)
+    }
+    redirect("/leaderboard")
+  }
+
+  get("/leaderboard/delete/:id") {
+    contentType = "text/html"
+
+    val leaderboardOpt = leaderboardService.findById(params("id").toLong)
+
+    if (leaderboardOpt.isDefined) {
+      leaderboardService.delete(leaderboardOpt.get)
+    }
+
+    redirect("/leaderboard")
+  }
+
+
 }

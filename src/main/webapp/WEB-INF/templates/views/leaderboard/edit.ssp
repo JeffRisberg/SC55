@@ -1,0 +1,19 @@
+<% import com.incra.model.Leaderboard %>
+<%@ val leaderboard: com.incra.model.Leaderboard %>
+
+<div style="margin-top: 30px; background: #ccc; padding: 10px">
+<form action="/leaderboard/save">
+<input type="hidden" name="id" value="${leaderboard.id}"/>
+
+  <table class="table">
+    <tr>
+      <td>Name:</td>
+      <td><input type="text" name="name" value="${leaderboard.name}"></td>
+    </tr>
+
+    <tr>
+     <td><input type="submit"></td>
+     </tr>
+  </table>
+</form>
+</div>

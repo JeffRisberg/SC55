@@ -10,12 +10,17 @@
     <tr>
         <th>Name</th>
         <th>Direction</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
     </tr>
     #for (leaderboard <- leaderboards)
         <tr>
             <td><a href="/leaderboard/${leaderboard.id}">${leaderboard.name}</a></td>
             <td>${leaderboard.direction.value}</td>
+            <td><a href="/leaderboard/edit/${leaderboard.id}">Edit</a></td>
+            <td><a href="/leaderboard/delete/${leaderboard.id}">Delete</a></td>
         </tr>
     #end
 </table>
+<a class="btn btn-primary" href="/leaderboard/create">Create New Leaderboard</a>
 </div>

@@ -1,0 +1,35 @@
+<% import com.incra.model.Challenge %>
+<%@ val challenge: com.incra.model.Challenge %>
+
+<div style="margin-top: 30px; background: #ccc; padding: 10px">
+<form action="/challenge/save">
+<input type="hidden" name="id" value="${challenge.id}"/>
+
+  <table class="table">
+    <tr>
+      <td>Name:</td>
+      <td><input type="text" name="name" value="${challenge.name}"></td>
+    </tr>
+     <tr>
+      <td>Name:</td>
+      <td><input type="text" name="teamworkTypeName" value="${challenge.teamworkType.name}"></td>
+    </tr>
+    <tr>
+      <td>Start Date:</td>
+      <td><input type="text" name="startDate" value="${challenge.startDate}"></td>
+    </tr>
+    <tr>
+      <td>End Date:</td>
+      <td><input type="text" name="endDate" value="${challenge.endDate}"></td>
+    </tr>
+     <tr>
+      <td>Active:</td>
+      <td><input type="text" name="active" value="${challenge.active}"></td>
+    </tr>
+
+    <tr>
+     <td><input type="submit"></td>
+     </tr>
+  </table>
+</form>
+</div>
