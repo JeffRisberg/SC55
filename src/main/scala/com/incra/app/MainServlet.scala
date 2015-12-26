@@ -65,6 +65,26 @@ class MainServlet(implicit val bindingModule: BindingModule) extends SC55Stack {
     }
   }
 
+  get("/activity.json/:id") {
+    contentType = "text/text"
+
+    val activityOpt = activityService.findById(params("id").toLong)
+
+    if (activityOpt.isDefined) {
+      // use Json4s to convert
+      val activity = activityOpt.get
+
+
+      val data1 = List("title" -> "SC55 Activity")
+      val data2 = data1 ++ List("activity" -> activity)
+
+      ssp("/activity/show", data2.toSeq: _*)
+    }
+    else {
+      "not found"
+    }
+  }
+
   get("/activity/edit/:id") {
     contentType = "text/html"
 
